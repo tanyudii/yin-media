@@ -34,7 +34,7 @@ class YinMediaServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 [
-                    __DIR__ . "/../assets/migrations" => database_path(
+                    __DIR__ . "/../assets/migrations" => \database_path(
                         "migrations"
                     ),
                 ],
@@ -43,7 +43,7 @@ class YinMediaServiceProvider extends ServiceProvider
 
             $this->publishes(
                 [
-                    __DIR__ . "/../assets/yin-media.php" => config_path(
+                    __DIR__ . "/../assets/yin-media.php" => \config_path(
                         "yin-media.php"
                     ),
                 ],

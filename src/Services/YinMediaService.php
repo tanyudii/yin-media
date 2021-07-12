@@ -2,6 +2,7 @@
 
 namespace tanyudii\YinMedia\Services;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use tanyudii\YinMedia\Controllers\MediaController;
 use tanyudii\YinMedia\Exceptions\YinMediaException;
@@ -13,13 +14,11 @@ class YinMediaService
      */
     public function routes()
     {
-        Route::group(config("yin-media.route", []), function () {
-            Route::get("/", [MediaController::class, "index"])->name("index");
-            Route::post("/", [MediaController::class, "store"])->name("store");
-            Route::get("/{id}", [MediaController::class, "show"])->name("show");
-            Route::delete("/{id}", [MediaController::class, "destroy"])->name(
-                "destroy"
-            );
+        Route::group(Config::get("yin-media.route", []), function () {
+            Route::get("/", [MediaController::class, "index"]);
+            Route::post("/", [MediaController::class, "store"]);
+            Route::get("/{id}", [MediaController::class, "show"]);
+            Route::delete("/{id}", [MediaController::class, "destroy"]);
         });
     }
 
