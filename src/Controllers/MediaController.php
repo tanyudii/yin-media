@@ -39,6 +39,8 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
+        $isMultipleFile = is_array($request->file('file'));
+
         $request->validate(array_merge(YinRequestService::getDefaultRules(
             get_class($this->repository)),
             [
@@ -50,7 +52,7 @@ class MediaController extends Controller
                     new ValidType(Config::get("yin-media.rules.allowed_disk", [])),
                 ],
                 "path" => ["required", "string"],
-                "file" => $this->getFileRules($request),
+                ($isMultipleFile ? "file.*" : "file") => $this->getFileRules($request),
             ]
         ));
 
@@ -66,10 +68,6 @@ class MediaController extends Controller
             $data = Collection::make([]);
 
             foreach ($files as $index => $file) {
-                if ($index > 0) {
-                    break;
-                }
-
                 $fileName = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension();
                 $encodedName = Carbon::now()->format("Y_m_d_his_") . strtoupper(Str::random());
@@ -93,7 +91,7 @@ class MediaController extends Controller
             DB::commit();
 
             if ($data->count() == 1) {
-                YinResourceService::jsonResource(MediaResource::class, $data->first());
+                return YinResourceService::jsonResource(MediaResource::class, $data->first());
             }
 
             return YinResourceService::jsonCollection(MediaResource::class, $data);
