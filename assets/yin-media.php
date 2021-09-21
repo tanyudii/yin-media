@@ -13,7 +13,7 @@ return [
      * Request file rules
      */
     "rules" => [
-        "allowed_disk" => array_keys(config("filesystems.disks")),
+        "allowed_disk" => array_keys(\config("filesystems.disks")),
 
         /**
          * Set NULL for allow all Mime(s)
@@ -34,5 +34,13 @@ return [
     "route" => [
         "prefix" => "media",
         "as" => "media.",
+    ],
+
+    /**
+     * Route group image config
+     */
+    "route_image" => [
+        "prefix" => "image",
+        "as" => "image.",
     ],
 ];
