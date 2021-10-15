@@ -15,10 +15,10 @@ class YinMediaService
     public function routes()
     {
         Route::group(Config::get("yin-media.route", []), function () {
-            Route::get("/", [MediaController::class, "index"]);
-            Route::post("/", [MediaController::class, "store"]);
-            Route::get("/{id}", [MediaController::class, "show"]);
-            Route::delete("/{id}", [MediaController::class, "destroy"]);
+            Route::get("/", [MediaController::class, "index"])->name('index');
+            Route::post("/", [MediaController::class, "store"])->name('store');
+            Route::get("/{id}", [MediaController::class, "show"])->name('show');
+            Route::delete("/{id}", [MediaController::class, "destroy"])->name('destroy');
         });
 
         Route::group(Config::get("yin-media.route_image", []), function () {
